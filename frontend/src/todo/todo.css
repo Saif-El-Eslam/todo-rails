@@ -1,0 +1,133 @@
+.todo {
+  margin: 0 auto;
+  width: 50%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.todo-card {
+  padding: 0 20px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.todo-content {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  width: 100%;
+}
+.todo-left {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.todo-right {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+
+.todo-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.todo-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* gereen box containing done  */
+.done {
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.mark-done {
+  width: 140px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: rgb(117, 117, 117);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.mark-done:hover {
+  cursor: pointer;
+  background-color: rgb(36, 36, 36);
+}
+
+.mark-done:active {
+  transform: translateY(2px);
+}
+
+.todo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.todo-actions div {
+  width: 20px;
+  height: 20px;
+}
+
+.todo-actions div:hover {
+  cursor: pointer;
+}
+
+/* /////////////////////////////////// */
+.todos-container {
+  margin-top: 20px;
+}
+
+.create-todo {
+  margin: 0 auto;
+  width: 50%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.create-todo:hover {
+  cursor: pointer;
+  background-color: rgb(36, 36, 36);
+  color: white;
+}
+
+.create-todo:active {
+  transform: translateY(2px);
+}

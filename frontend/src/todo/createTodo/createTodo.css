@@ -1,0 +1,64 @@
+/* form for todo creation */
+.create-todo-comp {
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(224, 224, 224);
+}
+
+.create-todo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+}
+
+.create-todo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: rgb(112, 112, 112);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.create-todo-container h1 {
+  color: rgb(50, 221, 255);
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.create-todo-container input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(255, 255, 255);
+  color: rgb(36, 36, 36);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.create-todo-container button {
+  width: 85%;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  color: rgb(36, 36, 36);
+  font-size: 1rem;
+  background-color: rgb(123, 207, 224);
+  font-weight: bold;
+}
+
+.create-todo-container button:hover {
+  background-color: rgb(50, 221, 255);
+}
+
+.create-todo-container button:active {
+  transform: translateY(2px);
+}
