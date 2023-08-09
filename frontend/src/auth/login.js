@@ -22,11 +22,15 @@ function Login() {
       );
       console.log(data.user);
       sessionStorage.setItem("token", data.user.token);
+      sessionStorage.setItem("username", data.user.username);
       setError("");
       navigate("/todo");
     } catch (err) {
       console.log(err);
-      setError(err.response.data.message);
+      setError("Invalid username or password");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     }
   };
 

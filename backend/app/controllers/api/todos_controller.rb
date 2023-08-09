@@ -15,7 +15,7 @@ class Api::TodosController < ApplicationController
     if todo.save
       render json: todo, status: 201
     else
-      render json: {error: todo.errors.messages}, status: 404
+      render json: {error: todo.errors.messages}, status: :unprocessable_entity
     end
   end
 
@@ -39,7 +39,7 @@ class Api::TodosController < ApplicationController
     if todo.destroy
       render json: todo, status: 200
     else
-      render json: {error: todo.errors.messages}, status: 404
+      render json: {error: todo.errors.messages}, status: :unprocessable_entity
     end
   end
 
@@ -63,7 +63,7 @@ class Api::TodosController < ApplicationController
     if todo.update(todo_params)
       render json: todo, status: 200
     else
-      render json: {error: todo.errors.messages}, status: 404
+      render json: {error: todo.errors.messages}, status: :unprocessable_entity
     end    
   end
 
@@ -105,7 +105,7 @@ class Api::TodosController < ApplicationController
     end
 
     render json: todo, status: 200
-  end
+  end  
 
   private
   def todo_params

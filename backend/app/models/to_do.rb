@@ -8,6 +8,8 @@ class ToDo
   field :user_id, type: String
   field :image, type: String
 
+  mount_uploader :image, ImageUploader
+
   validates :title, presence: true
   validates :user_id, presence: true
 end

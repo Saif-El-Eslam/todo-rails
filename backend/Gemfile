@@ -37,7 +37,8 @@ gem "rack-cors"
 gem "jwt"
 
 gem "image_processing"
-
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
 
 
 group :development, :test do

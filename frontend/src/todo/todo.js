@@ -55,7 +55,12 @@ function Todo({ todo, getTodos }) {
           </div>
           <div className="todo-right">
             <div className="todo-image">
-              <img src={todo.image} alt="todo description" />
+              {todo.image.url && (
+                <img
+                  src={`http://localhost:3000/${todo.image.url}`}
+                  alt="todo avatar"
+                />
+              )}
             </div>
             <div className="todo-done">
               {todo.completed ? (

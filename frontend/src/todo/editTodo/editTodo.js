@@ -37,16 +37,18 @@ function EditTodo() {
   const [image, setImage] = useState(null);
 
   const handleEditTodo = async () => {
+    const todoData = new FormData();
+
+    todoData.append("title", title);
+    todoData.append("description", description);
+    todoData.append("image", image);
+
     try {
       const { data } = await axios.put(
         `${process.env.REACT_APP_API_URL}/updateTodo/${sessionStorage.getItem(
           "todoId"
         )}`,
-        {
-          title,
-          description,
-          image,
-        },
+        todoData,
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.token}`,
@@ -84,7 +86,7 @@ function EditTodo() {
             accept="image/*"
             onChange={(e) => {
               setImage(e.target.files[0]);
-              console.log(e.target.files[0]);
+              // console.log(e.target.files[0]);
             }}
           />
           <button onClick={handleEditTodo}>Edit Todo</button>

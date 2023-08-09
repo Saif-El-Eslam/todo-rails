@@ -24,8 +24,13 @@
   cursor: pointer;
 }
 
+.header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .header-container div {
-  float: left;
+  /* float: left; */
   display: block;
   color: white;
   text-align: center;

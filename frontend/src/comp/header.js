@@ -19,6 +19,7 @@ function Header() {
         }
       );
       sessionStorage.removeItem("token");
+      sessionStorage.removeItem("username");
       navigate("/");
       console.log(data);
     } catch (err) {
@@ -36,7 +37,8 @@ function Header() {
         >
           ToDo
         </div>
-        {sessionStorage.getItem("token") ? (
+
+        {sessionStorage.token ? (
           <button onClick={handleLogout}>Logout</button>
         ) : (
           <span>

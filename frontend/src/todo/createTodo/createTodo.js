@@ -13,14 +13,16 @@ function CreateTodo() {
   const navigate = useNavigate();
 
   const handleCreateTodo = async () => {
+    const todoData = new FormData();
+
+    todoData.append("title", title);
+    todoData.append("description", description);
+    todoData.append("image", image);
+
     try {
       const { data } = await axios.post(
         `${process.env.REACT_APP_API_URL}/addTodo`,
-        {
-          title,
-          description,
-          image,
-        },
+        todoData,
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.token}`,
