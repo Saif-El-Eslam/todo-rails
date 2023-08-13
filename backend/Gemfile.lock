@@ -103,6 +103,13 @@ GEM
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    google-protobuf (3.24.0-x64-mingw-ucrt)
+    googleapis-common-protos-types (1.8.0)
+      google-protobuf (~> 3.18)
+    grpc (1.57.0-x64-mingw-ucrt)
+      google-protobuf (~> 3.23)
+      googleapis-common-protos-types (~> 1.0)
+    grpc-tools (1.57.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -211,6 +218,8 @@ DEPENDENCIES
   bootsnap
   carrierwave-mongoid
   debug
+  grpc
+  grpc-tools
   image_processing
   jwt
   mongoid

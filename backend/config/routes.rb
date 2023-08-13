@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     post 'login', action: :login, controller: :auth
     post 'logout', action: :logout, controller: :auth
     post 'signup', action: :signup, controller: :users
+
+    post 'say_hello', action: :say_hello, controller: :users
   end
 
 end
