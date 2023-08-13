@@ -62,3 +62,10 @@
 .create-todo-container button:active {
   transform: translateY(2px);
 }
+
+.create-todo-title {
+  color: rgb(50, 221, 255);
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}

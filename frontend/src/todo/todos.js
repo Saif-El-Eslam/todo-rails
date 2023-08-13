@@ -9,6 +9,7 @@ function Todos() {
 
   // get all todos
   const [todos, setTodos] = useState([]);
+  const [error, setError] = useState("");
 
   const getTodos = async () => {
     try {
@@ -23,13 +24,25 @@ function Todos() {
       console.log(data);
       setTodos(data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      if (err.response.status === 401) {
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("username");
+        navigate("/login");
+      }
+      if (err.response.status === 500) {
+        setError("Something went wrong");
+      }
+
+      if (err.response.status === 404) {
+        setError("No todos found");
+      }
     }
   };
 
   useEffect(() => {
     getTodos();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="todos">
@@ -44,6 +57,8 @@ function Todos() {
         >
           {sessionStorage.token ? "Create Todo +" : "Login to create todo"}
         </div>
+
+        {error && <div className="error">{error}</div>}
 
         {/* rinder the todos */}
         {todos.map((todo) => (

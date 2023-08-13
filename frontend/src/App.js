@@ -7,18 +7,22 @@ import Signup from "./auth/signup";
 import Login from "./auth/login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import { ChakraProvider } from "@chakra-ui/react";
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/todo" element={<Todos />} />
-        <Route path="/todo/create" element={<CreateTodo />} />
-        <Route path="/todo/edit/:id" element={<EditTodo />} />
-      </Routes>
-    </BrowserRouter>
+    <ChakraProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/todo" element={<Todos />} />
+          <Route path="/todo/create" element={<CreateTodo />} />
+          <Route path="/todo/edit/:id" element={<EditTodo />} />
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider>
   );
 }
 

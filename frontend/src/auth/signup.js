@@ -3,6 +3,17 @@ import "./signup.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "../comp/header";
+import {
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Heading,
+  VStack,
+  FormLabel,
+  Input,
+  Button,
+} from "@chakra-ui/react";
 
 function Signup() {
   const navigate = useNavigate();
@@ -15,8 +26,9 @@ function Signup() {
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
+    // handle errors
+    if (username === "" || email === "" || password === "") {
+      setError("Please fill all the fields");
       setTimeout(() => {
         setError("");
       }, 3000);
@@ -25,6 +37,13 @@ function Signup() {
     if (password.length < 6) {
       setError("Password must be at least 6 characters");
 
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
       setTimeout(() => {
         setError("");
       }, 3000);
@@ -51,46 +70,73 @@ function Signup() {
   };
 
   return (
-    <div className="signup">
+    <Box w="100%" h="100vh" align="center">
       <Header />
-      <div className="signup-container">
-        <h1>Signup</h1>
-        <div className="error">{error}</div>
-        <form
-          className="signup-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
+
+      <Box>
+        <Card
+          w="50%"
+          h="550px"
+          align="center"
+          mt="5%"
+          borderRadius="lg"
+          backgroundColor="#eee"
         >
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="email@example.co"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <button type="submit">Signup</button>
-        </form>
-      </div>
-    </div>
+          <CardHeader>
+            <Heading size={"lg"}>Signup</Heading>
+          </CardHeader>
+
+          <CardBody mt={"0px"} w="100%">
+            <VStack gap={4}>
+              <Box w="80%">
+                <FormLabel>Username</FormLabel>
+                <Input
+                  placeholder="Username"
+                  backgroundColor="#E8F0FE"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </Box>
+
+              <Box w="80%">
+                <FormLabel>Email</FormLabel>
+                <Input
+                  placeholder="Email"
+                  backgroundColor="#E8F0FE"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Box>
+
+              <Box w="80%">
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  backgroundColor="#E8F0FE"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Box>
+
+              <Box w="80%">
+                <FormLabel>Confirm Password</FormLabel>
+                <Input
+                  type="password"
+                  placeholder="Confirm Password"
+                  backgroundColor="#E8F0FE"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </Box>
+
+              <Button colorScheme="blue" onClick={handleSubmit}>
+                {" "}
+                Signup{" "}
+              </Button>
+
+              <Box color="red">{error}</Box>
+            </VStack>
+          </CardBody>
+        </Card>
+      </Box>
+    </Box>
   );
 }
 
