@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Todo from "./todo";
 import Header from "../comp/header";
+import { Box } from "@chakra-ui/react";
 
 function Todos() {
   const navigate = useNavigate();
@@ -45,27 +46,41 @@ function Todos() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="todos">
+    <Box align="center">
       <Header />
-      <div className="todos-container">
-        <div
-          className="create-todo"
-          onClick={() => {
-            if (sessionStorage.getItem("token")) navigate("/todo/create");
-            else navigate("/login");
-          }}
-        >
-          {sessionStorage.token ? "Create Todo +" : "Login to create todo"}
-        </div>
 
-        {error && <div className="error">{error}</div>}
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        w="50%"
+        h="50px"
+        border="2px solid #eee"
+        borderRadius="lg"
+        mt="30px"
+        _hover={{
+          cursor: "pointer",
+          backgroundColor: "#eee",
+        }}
+        _active={{
+          backgroundColor: "#ddd",
+          transform: "scale(0.98)",
+        }}
+        onClick={() => {
+          if (sessionStorage.getItem("token")) navigate("/todo/create");
+          else navigate("/login");
+        }}
+      >
+        {sessionStorage.token ? "Create Todo +" : "Login to create todo"}
+      </Box>
 
-        {/* rinder the todos */}
-        {todos.map((todo) => (
-          <Todo todo={todo} getTodos={getTodos} key={todo._id.$oid} />
-        ))}
-      </div>
-    </div>
+      {error && <Box color="red">{error}</Box>}
+
+      {/* rinder the todos */}
+      {todos.map((todo) => (
+        <Todo todo={todo} getTodos={getTodos} key={todo._id.$oid} />
+      ))}
+    </Box>
   );
 }
 

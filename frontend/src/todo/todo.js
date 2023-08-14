@@ -3,6 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Heading,
+  Image,
+  Button,
+} from "@chakra-ui/react";
 
 function Todo({ todo, getTodos }) {
   const navigate = useNavigate();
@@ -21,12 +31,12 @@ function Todo({ todo, getTodos }) {
   };
 
   // mark todo as done
-  const markAsDone = async () => {
+  const markAsDone = async (done) => {
     try {
       await axios.put(
         `${process.env.REACT_APP_API_URL}/updateTodo/${todo._id.$oid}`,
         {
-          completed: true,
+          completed: done,
         },
         {
           headers: {
@@ -41,57 +51,65 @@ function Todo({ todo, getTodos }) {
   };
 
   return (
-    <div className="todo">
-      {/* this is a card consist of a Header and a done checkbox with an optional description and image */}
-      <div className="todo-card">
-        <div className="todo-content">
-          <div className="todo-left">
-            <div className="todo-title">
-              <h1>{todo.title}</h1>
-            </div>
-            <div className="todo-description">
-              <p>{todo.description}</p>
-            </div>
-          </div>
-          <div className="todo-right">
-            <div className="todo-image">
-              {todo.image.url && (
-                <img
-                  src={`http://localhost:3000/${todo.image.url}`}
-                  alt="todo avatar"
-                />
-              )}
-            </div>
-            <div className="todo-done">
-              {todo.completed ? (
-                <div className="done">DONE</div>
-              ) : (
-                <div className="mark-done" onClick={markAsDone}>
-                  Mark as done
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className="todo-actions">
-          <div
-            className="todo-delete"
+    <Card w="50%" p="5px" display="flex" flexDirection="row" m="20px">
+      <CardHeader w="60%" display="flex" flexDirection="column" gap={6}>
+        <Heading>{todo.title}</Heading>
+        <Box>{todo.description}</Box>
+      </CardHeader>
+
+      <CardBody w="30%" p="10px" display="flex" flexDirection="column" gap={6}>
+        <Box>
+          {todo.image.url && (
+            <Image
+              w="100px"
+              h="100px"
+              borderRadius="50%"
+              src={`http://localhost:3000/${todo.image.url}`}
+              alt="todo avatar"
+            />
+          )}
+        </Box>
+        <Box>
+          {todo.completed ? (
+            <Button colorScheme="green" onClick={() => markAsDone(0)}>
+              DONE
+            </Button>
+          ) : (
+            <Button colorScheme="gray" onClick={() => markAsDone(1)}>
+              Mark as done
+            </Button>
+          )}
+        </Box>
+      </CardBody>
+
+      <CardFooter
+        w="10%"
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-around"
+        p="5px"
+      >
+        <Box>
+          <Button
+            colorScheme="red"
             onClick={() => handleDeleteTodo(todo._id.$oid)}
           >
             <FontAwesomeIcon icon={faTrash} />
-          </div>
-          <div
-            className="todo-edit"
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            colorScheme="blue"
             onClick={() => {
               sessionStorage.setItem("todoId", todo._id.$oid);
               navigate("/todo/edit/" + todo._id.$oid);
             }}
           >
             <FontAwesomeIcon icon={faEdit} />
-          </div>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </Box>
+      </CardFooter>
+    </Card>
   );
 }
 

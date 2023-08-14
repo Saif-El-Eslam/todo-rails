@@ -5,9 +5,21 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import {
+  Box,
+  Card,
+  CardHeader,
+  Heading,
+  CardBody,
+  VStack,
+  FormLabel,
+  Input,
+  Button,
+} from "@chakra-ui/react";
 
 function EditTodo() {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const getTodo = async () => {
     try {
@@ -30,18 +42,27 @@ function EditTodo() {
 
   useEffect(() => {
     getTodo();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
 
   const handleEditTodo = async () => {
+    // handle errors
+    if (title === "") {
+      setError("Title is required");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return;
+    }
+
     const todoData = new FormData();
 
     todoData.append("title", title);
     todoData.append("description", description);
-    todoData.append("image", image);
+    if (image) todoData.append("image", image);
 
     try {
       const { data } = await axios.put(
@@ -63,36 +84,68 @@ function EditTodo() {
   };
 
   return (
-    <div className="edit-todo-comp">
+    <Box w="100%" h="100vh" align="center">
       <Header />
-      <div className="edit-todo-wrapper">
-        <div className="edit-todo-container">
-          <div className="edit-todo-title">Edit Todo</div>
-          <input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <input
-            type="file"
-            placeholder="Image"
-            accept="image/*"
-            onChange={(e) => {
-              setImage(e.target.files[0]);
-              // console.log(e.target.files[0]);
-            }}
-          />
-          <button onClick={handleEditTodo}>Edit Todo</button>
-        </div>
-      </div>
-    </div>
+
+      <Box>
+        <Card
+          w="50%"
+          h="450px"
+          align="center"
+          mt="5%"
+          borderRadius="lg"
+          backgroundColor="#eee"
+        >
+          <CardHeader>
+            <Heading size={"lg"}>Edit Todo</Heading>
+          </CardHeader>
+
+          <CardBody mt={"0px"} w="100%">
+            <VStack spacing={4}>
+              <Box w="80%">
+                <FormLabel>Title</FormLabel>
+                <Input
+                  type="text"
+                  placeholder="Title"
+                  backgroundColor="#E8F0FE"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </Box>
+
+              <Box w="80%">
+                <FormLabel>Description</FormLabel>
+                <Input
+                  type="text"
+                  placeholder="Description"
+                  backgroundColor="#E8F0FE"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </Box>
+
+              <Box w="80%">
+                <FormLabel>Image</FormLabel>
+                <Input
+                  type="file"
+                  placeholder="Image"
+                  backgroundColor="#E8F0FE"
+                  accept="image/*"
+                  // value={image}
+                  onChange={(e) => setImage(e.target.files[0])}
+                />
+              </Box>
+
+              <Button onClick={handleEditTodo} colorScheme="blue">
+                Edit Todo
+              </Button>
+
+              <Box color="red">{error}</Box>
+            </VStack>
+          </CardBody>
+        </Card>
+      </Box>
+    </Box>
   );
 }
 
