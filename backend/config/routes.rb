@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     post 'signup', action: :signup, controller: :users
 
     post 'say_hello', action: :say_hello, controller: :users
+
+    post "message", action: :create, controller: :message
   end
 
 end

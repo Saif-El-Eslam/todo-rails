@@ -35,5 +35,15 @@ module Todo
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.after_initialize do
+      subscriber1 = MessageSubscriber.new
+      subscriber2 = MessageSubscriber.new
+
+      Thread.new { subscriber1.subscribe }
+      Thread.new { subscriber2.subscribe }
+    end
+
+
   end
 end
