@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 
     post 'say_hello', action: :say_hello, controller: :users
 
-    post "message", action: :create, controller: :message
   end
 
 end

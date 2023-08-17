@@ -46,7 +46,10 @@ gem 'grpc'
 gem 'grpc-tools'
 
 # RabbitMQ
-gem "bunny", ">= 2.9.2"
+# gem "bunny"
+gem 'sneakers'
+# gem 'json'
+# gem 'redis'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
