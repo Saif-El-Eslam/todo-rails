@@ -5,14 +5,17 @@ class Api::UsersController < ApplicationController
     def getUsers
         users = User.all
         render json: users
+        return true
     end
 
     def signup
         user = User.new(user_params)
         if user.save
             render json: user, status: 201
+            return true
         else
-            render json: {error: user.errors.messages}, status: 404
+            render json: {error: user.errors.messages}, status: 400
+            return true
         end
     end
 
@@ -23,6 +26,7 @@ class Api::UsersController < ApplicationController
         user = params[:username]
         message = stub.say_hello(Hello::HelloRequest.new(name: user)).message
         render json: {message: message}
+        return true
     end
 
     private

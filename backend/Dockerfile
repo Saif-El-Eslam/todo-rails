@@ -13,6 +13,7 @@ RUN apt-get update -qq && apt-get install -y nodejs
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler
 RUN bundle install
+RUN rake rswag:specs:swaggerize
 
 # Copy the Rails app into the container
 COPY . .

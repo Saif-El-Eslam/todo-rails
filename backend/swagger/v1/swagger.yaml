@@ -1,0 +1,618 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/login":
+    post:
+      summary: login auth
+      tags:
+      - Login user
+      description: Login user
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      _id:
+                        type: object
+                        properties:
+                          "$oid":
+                            type: string
+                            example: 650f12afb735f833a03bd5e8
+                      created_at:
+                        type: string
+                        example: '2023-09-23T16:30:39.049Z'
+                      username:
+                        type: string
+                        example: testswag
+                      email:
+                        type: string
+                        example: testswag@example.com
+                      token:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjp7IiRvaWQiOiI2NTBmMTJhZmI3MzVmODMzYTAzYmQ1ZTgifX0.5BJFWG655dVFFdapFpf8db0LS2asPNGvtaZgnf1rmps
+                      updated_at:
+                        type: string
+                        example: '2023-09-23T16:30:39.049Z'
+                    required:
+                    - id
+                    - username
+                    - email
+                    - password_digest
+                    - token
+                required:
+                - user
+        '401':
+          description: invalid username or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid username or password
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: testswag
+                password:
+                  type: string
+                  example: testswag
+              required:
+              - username
+              - password
+  "/api/logout":
+    post:
+      summary: logout auth
+      tags:
+      - Logout user
+      description: Logout user
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: successful
+          headers:
+            Authorization:
+              description: Bearer token
+              type: JWT
+              required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Successfully logged out
+                required:
+                - message
+        '401':
+          description: invalid token
+          headers:
+            Authorization:
+              description: Bearer token
+              type: JWT
+              required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid token
+                required:
+                - error
+  "/api/addTodo":
+    post:
+      summary: Add Todo
+      tags:
+      - Add todo
+      description: Add todo
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '201':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: '123'
+                  title:
+                    type: string
+                    example: Buy milk
+                  description:
+                    type: string
+                    example: Go to the store and buy milk
+                  completed:
+                    type: boolean
+                    example: false
+                  image:
+                    type: string
+                    example: "/to_do/image/64cf8c64b735f8616093ceb2/image.png"
+                  user_id:
+                    type: string
+                    example: 650f12afb735f833a03bd5e8
+                required:
+                - id
+                - title
+                - user_id
+        '401':
+          description: invalid token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid token
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Buy milk
+                description:
+                  type: string
+                  example: Go to the store and buy milk
+                completed:
+                  type: boolean
+                  example: false
+                image:
+                  type: string
+                  example: "/to_do/image/64cf8c64b735f8616093ceb2/image.png"
+                user_id:
+                  type: string
+                  example: 650f12afb735f833a03bd5e8
+              required:
+              - title
+              - user_id
+  "/api/deleteTodo/{todo_id}":
+    delete:
+      summary: Delete Todo
+      tags:
+      - Delete todo
+      description: Delete todo
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: todo_id
+        in: path
+        description: todo_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: object
+                    properties:
+                      "$oid":
+                        type: string
+                        example: 65103cc4b735f80a3cb196ce
+                  completed:
+                    type: boolean
+                    example: false
+                  created_at:
+                    type: string
+                    example: '2023-09-24T13:42:28.417Z'
+                  description:
+                    type: string
+                    example: Go to the store and buy milk
+                  image:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        example: "/to_do/image/64cf8c64b735f8616093ceb2/image.png"
+                  title:
+                    type: string
+                    example: Buy milk
+                  updated_at:
+                    type: string
+                    example: '2023-09-24T13:42:28.417Z'
+                  user_id:
+                    type: string
+                    example: 650f12afb735f833a03bd5e8
+                required:
+                - id
+                - title
+                - user_id
+        '401':
+          description: invalid token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid token
+                required:
+                - error
+        '404':
+          description: todo not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Todo not found
+                required:
+                - error
+  "/api/updateTodo/{todo_id}":
+    put:
+      summary: Update Todo
+      tags:
+      - Update todo
+      description: Update todo
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: todo_id
+        in: path
+        description: todo_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: object
+                    properties:
+                      "$oid":
+                        type: string
+                        example: 65103cc4b735f80a3cb196ce
+                  completed:
+                    type: boolean
+                    example: false
+                  created_at:
+                    type: string
+                    example: '2023-09-24T13:42:28.417Z'
+                  description:
+                    type: string
+                    example: Go to the store and buy milk
+                  image:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        example: "/to_do/image/64cf8c64b735f8616093ceb2/image.png"
+                  title:
+                    type: string
+                    example: Buy milk
+                  updated_at:
+                    type: string
+                    example: '2023-09-24T13:42:28.417Z'
+                  user_id:
+                    type: string
+                    example: 650f12afb735f833a03bd5e8
+                required:
+                - id
+                - title
+                - user_id
+        '401':
+          description: invalid token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid token
+                required:
+                - error
+        '404':
+          description: todo not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Todo not found
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Buy milk
+                description:
+                  type: string
+                  example: Go to the store and buy milk
+                completed:
+                  type: boolean
+                  example: false
+                image:
+                  type: string
+                  example: "/to_do/image/64cf8c64b735f8616093ceb2/image.png"
+                user_id:
+                  type: string
+                  example: 650f12afb735f833a03bd5e8
+              required:
+              - title
+              - user_id
+  "/api/getTodos":
+    get:
+      summary: Get Todos
+      tags:
+      - Get todos
+      description: Get todos
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: object
+                      properties:
+                        "$oid":
+                          type: string
+                          example: 65103cc4b735f80a3cb196ce
+                    completed:
+                      type: boolean
+                      example: false
+                    created_at:
+                      type: string
+                      example: '2023-09-24T13:42:28.417Z'
+                    description:
+                      type: string
+                      example: Go to the store and buy milk
+                    image:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          example: "/to_do/image/64cf8c64b735f8616093ceb2/image.png"
+                    title:
+                      type: string
+                      example: Buy milk
+                    updated_at:
+                      type: string
+                      example: '2023-09-24T13:42:28.417Z'
+                    user_id:
+                      type: string
+                      example: 650f12afb735f833a03bd5e8
+                  required:
+                  - id
+                  - title
+                  - user_id
+        '401':
+          description: invalid token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid token
+                required:
+                - error
+        '404':
+          description: no todos found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: No todos found
+                required:
+                - error
+  "/api/getTodo/{todo_id}":
+    get:
+      summary: get Todo
+      tags:
+      - Get todos
+      description: Get todo
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: todo_id
+        in: path
+        description: todo_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: object
+                    properties:
+                      "$oid":
+                        type: string
+                        example: 65103cc4b735f80a3cb196ce
+                  completed:
+                    type: boolean
+                    example: false
+                  created_at:
+                    type: string
+                    example: '2023-09-24T13:42:28.417Z'
+                  description:
+                    type: string
+                    example: Go to the store and buy milk
+                  image:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        example: "/to_do/image/64cf8c64b735f8616093ceb2/image.png"
+                  title:
+                    type: string
+                    example: Buy milk
+                  updated_at:
+                    type: string
+                    example: '2023-09-24T13:42:28.417Z'
+                  user_id:
+                    type: string
+                    example: 650f12afb735f833a03bd5e8
+                required:
+                - id
+                - title
+                - user_id
+        '401':
+          description: invalid token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid token
+                required:
+                - error
+        '404':
+          description: todo not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Todo not found
+                required:
+                - error
+  "/api/signup":
+    post:
+      summary: register User
+      tags:
+      - Register user
+      description: Register user
+      parameters: []
+      responses:
+        '201':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 650f12afb735f833a03bd5e8
+                  email:
+                    type: string
+                    example: testswag@example.com
+                  username:
+                    type: string
+                    example: testswag
+                  password:
+                    type: string
+                    example: testswag
+                required:
+                - id
+                - email
+                - username
+                - password
+        '400':
+          description: missing username
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example:
+                      username:
+                      - can't be blank
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: testswag
+                email:
+                  type: string
+                  example: testswag@example.com
+                password:
+                  type: string
+                  example: testswag
+              required:
+              - email
+              - username
+              - password
+components:
+  securitySchemes:
+    bearerAuth:
+      description: Bearer authentication
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3001

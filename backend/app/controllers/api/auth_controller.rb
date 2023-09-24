@@ -7,8 +7,10 @@ class Api::AuthController < ApplicationController
       token = create_token(user.id)
       user.set(:token => token)
       render json: {user: user.as_json(except: [:password_digest])}, status: 200
+      return true
     else
       render json: {error: "Invalid username or password"}, status: 401
+      return true
     end
   end
 
@@ -17,11 +19,15 @@ class Api::AuthController < ApplicationController
     current_user_id = check_token["$oid"]
 
     user = User.find_by(id: current_user_id)
+    
     if user
+      if !user.token
+        render json: {error: "Expired token"}, status: 401
+        return true
+      end
       user.set(:token => nil)
       render json: {message: "Successfully logged out"}, status: 200
-    else
-      render json: {error: "Invalid token"}, status: 401
+      return true
     end
   end
   

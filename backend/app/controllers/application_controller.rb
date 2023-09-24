@@ -17,10 +17,12 @@ class ApplicationController < ActionController::API
                 return decoded_token[0]['user_id']
             rescue JWT::DecodeError
                 render json: {error: "Invalid token"}, status: 401
+                return { }
             end
 
         else
             render json: {error: "No token"}, status: 401
+            return { }
         end
     end
 
